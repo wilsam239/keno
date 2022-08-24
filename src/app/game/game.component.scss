@@ -1,8 +1,53 @@
 .tile {
-  width: 8.5vw;
+  width: 9vw;
+  text-align: center;
+  height: 7vh;
+  border-radius: 0.25em;
+  margin: 2px 0;
+  background: #d8e4eb;
+  font-size: 2em;
+  color: #0000;
+}
+
+.selected {
+  color: white;
+  font-weight: bold;
+}
+
+.tails {
+  margin-top: 1em;
+}
+
+.big-tile {
+  width: 18vw;
   text-align: center;
   height: 10vh;
-  border: 1px solid black;
-  border-radius: 1em;
-  margin: 0.5em 0;
+  border-radius: 0.25em;
+  margin: 2px 0;
+  background: #d8e4eb;
+  font-size: 2em;
+  color: white;
+  background-color: var(--big-tile);
+}
+
+.heads-tile {
+  background-color: var(--heads);
+  color: white;
+}
+
+.tails-tile {
+  background-color: var(--tails);
+  color: white;
+}
+
+#heads-title {
+  color: var(--heads);
+}
+
+#tails-title {
+  color: var(--tails);
+}
+
+#game-header {
+  font-size: 20px;
 }

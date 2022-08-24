@@ -1,5 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "assets/mixins";
+@include selected-tile;
+
+:root {
+  --row1: #c5202b;
+  --row2: #006bb5;
+  --row3: #00843d;
+  --row4: #f9a800;
+  --row5: #b42996;
+  --row6: #f05000;
+  --row7: #8eaac0;
+  --row8: #523191;
+
+  --heads: #eb212e;
+  --tails: #157dbe;
+
+  --big-tile: #006bb5;
+}
 html,
 body {
   height: 100%;

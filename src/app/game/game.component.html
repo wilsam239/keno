@@ -1,5 +1,62 @@
-<section fxFlex fxLayoutGap="1em" fxLayout="row wrap" fxLayoutAlign="center">
-  <div *ngFor="let tile of tiles" class="tile" fxLayoutAlign="center center">
-    {{ tile }}
+<section fxLayout="column">
+  <div class="result-header" fxLayout="row" fxLayoutAlign="end">
+    <div
+      class="inner-result-header"
+      fxLayoutAlign="center center"
+      fxLayoutGap="4px"
+    >
+      <div id="heads-container" fxLayout="column" fxLayoutAlign=" center">
+        <div id="heads-title">Heads</div>
+        <div
+          id="heads-count"
+          class="tile heads-tile"
+          fxLayoutAlign="center center"
+        >
+          {{ headCount }}
+        </div>
+      </div>
+      <div id="tails-container" fxLayout="column" fxLayoutAlign=" center">
+        <div id="tails-title">Tails</div>
+        <div
+          id="tails-count"
+          class="tile tails-tile"
+          fxLayoutAlign="center center"
+        >
+          {{ tailCount }}
+        </div>
+      </div>
+      <div
+        id="game-id"
+        class="big-tile"
+        fxLayoutAlign="center center"
+        fxLayout="column"
+        fxLayoutGap="4px"
+      >
+        <div id="game-header">
+          <div>GAME</div>
+        </div>
+        <div>100</div>
+      </div>
+      <div id="fast-forward" class="big-tile" fxLayoutAlign="center center">
+        BUTTON
+      </div>
+    </div>
+  </div>
+  <div
+    class="board"
+    fxFlex
+    fxLayoutGap="4px"
+    fxLayout="row wrap"
+    fxLayoutAlign="center"
+  >
+    <div
+      *ngFor="let tile of tiles"
+      class="tile"
+      fxLayoutAlign="center center"
+      [id]="'tile-' + tile"
+      [ngClass]="{ tails: tile > 40 && tile <= 50 }"
+    >
+      {{ tile }}
+    </div>
   </div>
 </section>

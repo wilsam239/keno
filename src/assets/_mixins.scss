@@ -1,0 +1,17 @@
+@mixin selected-tile {
+  @for $i from 1 through 8 {
+    .selected-#{$i} {
+      animation: fadeSelectedRow#{$i} 0.5s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeSelectedRow#{$i} {
+      from {
+        background-color: #d8e4eb;
+      }
+      to {
+        background-color: var(--row#{$i});
+      }
+    }
+  }
+}

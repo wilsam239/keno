@@ -122,3 +122,18 @@ export const MASTER_LIST = [
   61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
   80,
 ]
+
+export function getRandom(arr: number[], n: number) {
+  let result = new Array(n),
+    len = arr.length,
+    taken = new Array(len)
+  if (n > len) {
+    throw new RangeError("getRandom: more elements taken than available")
+  }
+  while (n--) {
+    const x = Math.floor(Math.random() * len)
+    result[n] = arr[x in taken ? taken[x] : x]
+    taken[x] = --len in taken ? taken[len] : len
+  }
+  return result
+}
