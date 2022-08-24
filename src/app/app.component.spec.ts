@@ -14,10 +14,10 @@ describe("AppComponent", () => {
     expect(app).toBeTruthy()
   })
 
-  it(`should have as title 'app-name-here'`, () => {
+  it(`should have as title 'keno'`, () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
-    expect(app.title).toEqual("app-name-here")
+    expect(app.title).toEqual("keno")
   })
 
   it("should render title", () => {
@@ -25,7 +25,7 @@ describe("AppComponent", () => {
     fixture.detectChanges()
     const compiled = fixture.nativeElement as HTMLElement
     expect(compiled.querySelector(".content span")?.textContent).toContain(
-      "app-name-here app is running!"
+      "keno app is running!"
     )
   })
 })
