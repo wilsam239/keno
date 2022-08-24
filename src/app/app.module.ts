@@ -7,6 +7,7 @@ import { AppComponent } from "./app.component"
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { AppRoutingModule } from "./app-routing.module"
 import { SharedModule } from "./commons/modules/shared.module"
+import { GameService } from "./commons/services/game.service"
 import { MissingComponent } from "./missing.component"
 
 @NgModule({
@@ -18,7 +19,7 @@ import { MissingComponent } from "./missing.component"
     FlexLayoutModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [GameService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

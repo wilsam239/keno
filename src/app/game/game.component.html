@@ -1,1 +1,5 @@
-<p>game component works</p>
+<section fxFlex fxLayoutGap="1em" fxLayout="row wrap" fxLayoutAlign="center">
+  <div *ngFor="let tile of tiles" class="tile" fxLayoutAlign="center center">
+    {{ tile }}
+  </div>
+</section>

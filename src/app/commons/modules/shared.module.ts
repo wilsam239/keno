@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
+import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule } from "@angular/forms"
 import { MatAutocompleteModule } from "@angular/material/autocomplete"
 import { MatBadgeModule } from "@angular/material/badge"
@@ -74,8 +76,8 @@ const MATERIAL_LIBS = [
 ]
 
 @NgModule({
-  imports: [...MATERIAL_LIBS, FormsModule],
-  exports: [...MATERIAL_LIBS, FormsModule],
+  imports: [...MATERIAL_LIBS, FormsModule, CommonModule, FlexLayoutModule],
+  exports: [...MATERIAL_LIBS, FormsModule, CommonModule, FlexLayoutModule],
   declarations: [],
 })
 export class SharedModule {}

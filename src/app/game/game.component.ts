@@ -1,4 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Subscription, tap } from "rxjs"
+import { MASTER_LIST } from "../commons/global"
+import { GameService } from "../commons/services/game.service"
 
 @Component({
   selector: "app-game",
@@ -6,9 +9,26 @@ import { Component, OnDestroy, OnInit } from "@angular/core"
   styleUrls: ["./game.component.scss"],
 })
 export class GameComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = []
   title = "game"
 
-  ngOnInit() {}
+  tiles = MASTER_LIST
 
-  ngOnDestroy() {}
+  constructor(public gs: GameService) {}
+
+  ngOnInit() {
+    this.subs.push(
+      this.gs.setup
+        .pipe(
+          tap((setup) => {
+            console.log(setup)
+          })
+        )
+        .subscribe()
+    )
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach((s) => s.unsubscribe())
+  }
 }

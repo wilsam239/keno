@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core"
-import { Router } from "@angular/router";
+import { Router } from "@angular/router"
 import { AppRoutes, NUMBER_OPTIONS } from "../commons/global"
+import { GameService } from "../commons/services/game.service"
 
-interface SetupModel {
-    bet: number | undefined;
-    games: number | undefined;
-    numbers: number | undefined;
-    choices: number[]
+export interface SetupModel {
+  bet: number | undefined
+  games: number | undefined
+  numbers: number | undefined
+  choices: number[]
 }
 @Component({
   selector: "app-setup",
@@ -14,23 +15,23 @@ interface SetupModel {
   styleUrls: ["./setup.component.scss"],
 })
 export class SetupComponent implements OnInit, OnDestroy {
-  title = "setup";
+  title = "setup"
   setupModel: SetupModel = {
     bet: undefined,
     games: undefined,
     numbers: undefined,
-    choices: []
+    choices: [],
   }
-  numberOptions = NUMBER_OPTIONS;
+  numberOptions = NUMBER_OPTIONS
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private gs: GameService) {}
 
   ngOnInit() {}
 
   ngOnDestroy() {}
 
   finalise() {
-    Object.entries(this.setupModel).filter(([k, v]) => v !== undefined).forEach(([k, v]) => window.localStorage.setItem(k, v));
-    this.router.navigate([AppRoutes.PLAY]);
+    this.gs.setup.next(this.setupModel)
+    this.router.navigate([AppRoutes.PLAY])
   }
 }
