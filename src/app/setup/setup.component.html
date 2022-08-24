@@ -1,19 +1,40 @@
-<mat-form-field appearance="outline">
-  <mat-label>Enter Bet Amount Per Game</mat-label>
-  <span matPrefix>$</span>
-  <input
-    matInput
-    [(ngModel)]="numGames"
-    placeholder="placeHolder"
-    type="number"
-  />
-</mat-form-field>
+<section fxFlex fxLayout="column">
+  <mat-form-field appearance="outline">
+    <mat-label>Enter Bet Amount Per Game</mat-label>
+    <span matPrefix>$</span>
+    <input
+      matInput
+      [(ngModel)]="setupModel.bet"
+      placeholder="placeHolder"
+      type="number"
+    />
+  </mat-form-field>
 
-<mat-form-field appearance="outline">
-  <mat-label>How Many Numbers Would You Like To Play</mat-label>
-  <mat-select [(ngModel)]="numberOfNumbers">
-    <mat-option *ngFor="let option of numberOptions" [value]="option">
-      {{ option }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>How Many Numbers Would You Like To Play</mat-label>
+    <mat-select [(ngModel)]="setupModel.numbers">
+      <mat-option *ngFor="let option of numberOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>How Many Games</mat-label>
+    <input matInput [(ngModel)]="setupModel.games" type="number"/>
+  </mat-form-field>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Fun Options
+        </mat-panel-title>
+        <mat-panel-description>
+            These options just let you experiment with parameters
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    
+  </mat-expansion-panel>
+
+  <button mat-raised-button (click)="finalise()">Go!</button>
+</section>
