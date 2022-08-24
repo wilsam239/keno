@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core"
+import { FormsModule } from "@angular/forms"
 import { MatAutocompleteModule } from "@angular/material/autocomplete"
 import { MatBadgeModule } from "@angular/material/badge"
 import { MatButtonModule } from "@angular/material/button"
@@ -73,8 +74,8 @@ const MATERIAL_LIBS = [
 ]
 
 @NgModule({
-  imports: [MATERIAL_LIBS],
-  exports: [MATERIAL_LIBS],
+  imports: [...MATERIAL_LIBS, FormsModule],
+  exports: [...MATERIAL_LIBS, FormsModule],
   declarations: [],
 })
 export class SharedModule {}

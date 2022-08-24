@@ -1,1 +1,19 @@
-<p>setup component works</p>
+<mat-form-field appearance="outline">
+  <mat-label>Enter Bet Amount Per Game</mat-label>
+  <span matPrefix>$</span>
+  <input
+    matInput
+    [(ngModel)]="numGames"
+    placeholder="placeHolder"
+    type="number"
+  />
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>How Many Numbers Would You Like To Play</mat-label>
+  <mat-select [(ngModel)]="numberOfNumbers">
+    <mat-option *ngFor="let option of numberOptions" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
