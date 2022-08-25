@@ -37,19 +37,37 @@
         </div>
         <div>{{ gameNumber }}</div>
       </div>
-      <ng-container *ngIf="finished; else faster">
-        <div
-          id="time-until-next"
-          class="big-tile"
-          fxLayoutAlign="center center"
-          fxLayout="column"
-          fxLayoutGap="4px"
+      <ng-container *ngIf="gameFinished; else faster">
+        <ng-container
+          *ngIf="gameNumber < (this.config?.games ?? 0); else allFinished"
         >
-          <div class="big-tile-header">
-            <div>NEXT GAME IN</div>
+          <div
+            id="time-until-next"
+            class="big-tile"
+            fxLayoutAlign="center center"
+            fxLayout="column"
+            fxLayoutGap="4px"
+          >
+            <div class="big-tile-header">
+              <div>NEXT GAME IN</div>
+            </div>
+            <div>0:{{ secondsTilNext }}</div>
           </div>
-          <div>0:{{ secondsTilNext }}</div>
-        </div>
+        </ng-container>
+        <ng-template #allFinished>
+          <div
+            id="all-games-finished"
+            class="big-tile"
+            fxLayoutAlign="center center"
+            fxLayout="column"
+            fxLayoutGap="4px"
+          >
+            <div class="big-tile-header">
+              <div>FINISHED</div>
+            </div>
+            <div>$0.00</div>
+          </div>
+        </ng-template>
       </ng-container>
       <ng-template #faster>
         <div

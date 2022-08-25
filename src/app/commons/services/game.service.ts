@@ -4,7 +4,7 @@ import { SetupModel } from "src/app/setup/setup.component"
 
 const DEFAULT_SETUP: SetupModel = {
   bet: 0,
-  games: 0,
+  games: 2,
   choices: [],
   numbers: 0,
 }

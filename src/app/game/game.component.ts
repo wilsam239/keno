@@ -20,6 +20,7 @@ import {
   TIME_BETWEEN_GAMES,
 } from "../commons/global"
 import { GameService } from "../commons/services/game.service"
+import { SetupModel } from "../setup/setup.component"
 
 @Component({
   selector: "app-game",
@@ -33,18 +34,20 @@ export class GameComponent implements OnInit, OnDestroy {
   gameNumber = 0
 
   tiles = MASTER_LIST
-  fast = false
-  drawTime = new BehaviorSubject(1000)
+  fast = true
+  drawTime = new BehaviorSubject(this.fast ? 100 : 1000)
   private _results: number[] = []
   drawn: number[] = []
 
   private allNumbersDrawn = new BehaviorSubject(false)
-  finished = false
+  gameFinished = false
 
   headCount = 0
   tailCount = 0
 
   secondsTilNext!: string
+
+  config!: SetupModel
 
   constructor(public gs: GameService) {}
 
@@ -53,22 +56,22 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.draw()
     this.sub(
       this.gs.setup.pipe(
+        filter((setup) => !!setup),
         tap((setup) => {
-          console.log(setup)
+          this.config = setup
+          this.draw()
         })
       ),
       this.allNumbersDrawn.pipe(
         filter((b) => b),
-        tap(() => (this.finished = true)),
+        tap(() => (this.gameFinished = true)),
         mergeMap(() =>
           interval(1000).pipe(
             takeUntil(
               timer(TIME_BETWEEN_GAMES).pipe(
                 tap(() => {
-                  console.log("redraw")
                   this.draw()
                   this.allNumbersDrawn.next(false)
                 })
@@ -84,7 +87,7 @@ export class GameComponent implements OnInit, OnDestroy {
       ),
 
       this.drawTime.pipe(
-        // tap((val) => console.log("Should change interval to " + val)),
+        tap((val) => console.log("Should change interval to " + val)),
         switchMap((val) => interval(val)),
         filter(() => !this.allNumbersDrawn.getValue()),
         tap((val) => {
@@ -109,10 +112,16 @@ export class GameComponent implements OnInit, OnDestroy {
     )
   }
 
+  /**
+   * Reset all main variables, incremement game number and remove classes on selected numbers
+   */
   draw() {
+    if (this.gameNumber >= this.config.games!) {
+      return
+    }
     this.gameNumber += 1
     this.secondsTilNext = this.getTimeInString(TIME_BETWEEN_GAMES / 1000)
-    this.finished = false
+    this.gameFinished = false
     const selected = document.getElementsByClassName("selected")
     Array.from(selected).forEach((s) => {
       const classesToRemove: string[] = []
@@ -132,7 +141,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   changeDrawTime() {
     this.fast = !this.fast
-    this.drawTime.next(this.fast ? 1000 : 500)
+    this.drawTime.next(this.fast ? 100 : 1000)
   }
 
   ngOnDestroy() {
