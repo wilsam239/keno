@@ -30,7 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = []
   private drawSub!: Subscription
 
-  title = "game"
+  gameNumber = 0
 
   tiles = MASTER_LIST
   fast = false
@@ -110,6 +110,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   draw() {
+    this.gameNumber += 1
     this.secondsTilNext = this.getTimeInString(TIME_BETWEEN_GAMES / 1000)
     this.finished = false
     const selected = document.getElementsByClassName("selected")
