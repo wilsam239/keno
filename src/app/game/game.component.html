@@ -1,7 +1,31 @@
-<section fxLayout="column">
-  <div class="result-header" fxLayout="row" fxLayoutAlign="end">
+<section fxLayout="column" id="game-container">
+  <div
+    class="result-header"
+    fxLayout="row"
+    fxFill
+    fxLayoutAlign="space-between"
+    fxLayout
+  >
     <div
-      class="inner-result-header"
+      class="left-result-header"
+      fxLayoutAlign="center center"
+      fxLayoutGap="4px"
+    >
+      <a
+        id="back-container"
+        class="clickable"
+        fxLayout="column"
+        fxLayoutAlign=" center"
+        [routerLink]="['../', AppRoutes.SETUP]"
+      >
+        <div id="back-title">Setup</div>
+        <div class="tile back-tile" fxLayoutAlign="center center">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </div>
+      </a>
+    </div>
+    <div
+      class="right-result-header"
       fxLayoutAlign="center center"
       fxLayoutGap="4px"
     >
@@ -72,7 +96,7 @@
       <ng-template #faster>
         <div
           id="fast-forward"
-          class="big-tile"
+          class="big-tile clickable"
           fxLayoutAlign="center center"
           (click)="changeDrawTime()"
           fxLayout="column"

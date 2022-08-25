@@ -14,6 +14,7 @@ import {
 } from "rxjs"
 import { isSubscription } from "rxjs/internal/Subscription"
 import {
+  AppRoutes,
   DRAW_SIZE,
   getRandom,
   MASTER_LIST,
@@ -28,6 +29,7 @@ import { SetupModel } from "../setup/setup.component"
   styleUrls: ["./game.component.scss"],
 })
 export class GameComponent implements OnInit, OnDestroy {
+  AppRoutes = AppRoutes;
   private _subs: Subscription[] = []
   private drawSub!: Subscription
 
