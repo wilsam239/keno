@@ -5,7 +5,7 @@ import { getRandom, MASTER_LIST } from "../global"
 
 const DEFAULT_SETUP: SetupModel = {
   bet: 10,
-  games: 1,
+  games: 2,
   choices: getRandom(MASTER_LIST, 40),
   numbers: 40,
   skipVisuals: false,
@@ -28,7 +28,7 @@ export class GameService {
   }
 
   get dialogClosed() {
-    return this._dialogClose;
+    return this._dialogClose
   }
 
   get setup() {

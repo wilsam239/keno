@@ -6,9 +6,11 @@ import {
   isObservable,
   mergeMap,
   Observable,
+  repeatWhen,
   Subscription,
   switchMap,
   takeUntil,
+  takeWhile,
   tap,
   timer,
 } from "rxjs"
@@ -102,6 +104,7 @@ export class GameComponent implements OnInit, OnDestroy {
           interval(1000).pipe(
             takeUntil(
               timer(TIME_BETWEEN_GAMES).pipe(
+                takeWhile(() => this.gameNumber < this.config.games!),
                 tap(() => {
                   this.draw()
                   this.allNumbersDrawn.next(false)
@@ -121,7 +124,10 @@ export class GameComponent implements OnInit, OnDestroy {
         tap((val) => console.log("Should change interval to " + val)),
         switchMap((val) =>
           interval(val).pipe(
-            takeUntil(this.allNumbersDrawn.pipe(filter((b) => b)))
+            takeUntil(this.allNumbersDrawn.pipe(filter((b) => b))),
+            repeatWhen(() =>
+              this.allNumbersDrawn.pipe(filter((b) => b === false))
+            )
           )
         ),
         tap((val) => {
@@ -138,7 +144,6 @@ export class GameComponent implements OnInit, OnDestroy {
             newTile <= 40 ? (this.headCount += 1) : (this.tailCount += 1)
             this.drawn.push(newTile)
           } else {
-            console.log("DONE")
             this.allNumbersDrawn.next(true)
           }
         })
