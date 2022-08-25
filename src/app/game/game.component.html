@@ -23,6 +23,18 @@
           <mat-icon>arrow_back_ios</mat-icon>
         </div>
       </a>
+      <div
+        id="run-container"
+        class="clickable"
+        fxLayout="column"
+        fxLayoutAlign=" center"
+        (click)="retry()"
+      >
+        <div id="run-title">Again</div>
+        <div class="tile run-tile" fxLayoutAlign="center center">
+          <mat-icon>refresh</mat-icon>
+        </div>
+      </div>
     </div>
     <div
       class="right-result-header"
@@ -63,7 +75,7 @@
       </div>
       <ng-container *ngIf="gameFinished; else faster">
         <ng-container
-          *ngIf="gameNumber < (this.config?.games ?? 0); else allFinished"
+          *ngIf="gameNumber < (config?.games ?? 0); else allFinished"
         >
           <div
             id="time-until-next"
@@ -87,9 +99,9 @@
             fxLayoutGap="4px"
           >
             <div class="big-tile-header">
-              <div>FINISHED</div>
+              <div>RESULT</div>
             </div>
-            <div>$0.00</div>
+            <div>{{ payout | currency }}</div>
           </div>
         </ng-template>
       </ng-container>
@@ -125,6 +137,84 @@
       [ngClass]="{ tails: tile > 40 && tile <= 50 }"
     >
       {{ tile }}
+    </div>
+  </div>
+</section>
+
+<section id="game-summary" *ngIf="gameNumber == config.games! && gameFinished">
+  <h1>Games Summary</h1>
+  <div fxLayout="column">
+    <div
+      id="games-played"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>GAMES PLAYED</div>
+      </div>
+      <div>{{ config.games }}</div>
+    </div>
+    <div
+      id="payout"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>PAYOUT</div>
+      </div>
+      <div>{{ payout | currency }}</div>
+    </div>
+    <div
+      id="games-played"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>SPENT</div>
+      </div>
+      <div>{{ config.games! * config.bet! | currency }}</div>
+    </div>
+    <div
+      id="head-count-summary"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>HEAD COUNT</div>
+      </div>
+      <div>{{ totalHeadCount }}</div>
+    </div>
+    <div
+      id="tail-count-summary"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>TAIL COUNT</div>
+      </div>
+      <div>{{ totalTailCount }}</div>
+    </div>
+    <div
+      id="even-count-summary"
+      class="big-tile"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+      fxLayoutGap="4px"
+    >
+      <div class="big-tile-header">
+        <div>EVEN COUNT</div>
+      </div>
+      <div>{{ totalEvenCount }}</div>
     </div>
   </div>
 </section>

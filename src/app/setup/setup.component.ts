@@ -8,6 +8,8 @@ export interface SetupModel {
   games: number | undefined
   numbers: number | undefined
   choices: number[]
+  playUntilGreaterThan?: number
+  skipVisuals?: boolean
 }
 @Component({
   selector: "app-setup",

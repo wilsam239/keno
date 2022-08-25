@@ -21,19 +21,19 @@
 
   <mat-form-field appearance="outline">
     <mat-label>How Many Games</mat-label>
-    <input matInput [(ngModel)]="setupModel.games" type="number"/>
+    <input matInput [(ngModel)]="setupModel.games" type="number" />
   </mat-form-field>
 
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-        <mat-panel-title>
-            Fun Options
-        </mat-panel-title>
-        <mat-panel-description>
-            These options just let you experiment with parameters
-        </mat-panel-description>
+      <mat-panel-title> Fun Options </mat-panel-title>
+      <mat-panel-description>
+        These options just let you experiment with parameters
+      </mat-panel-description>
     </mat-expansion-panel-header>
-    
+    <mat-slide-toggle [(ngModel)]="setupModel.skipVisuals"
+      >Skip Visuals</mat-slide-toggle
+    >
   </mat-expansion-panel>
 
   <button mat-raised-button (click)="finalise()">Go!</button>

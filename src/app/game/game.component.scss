@@ -1,6 +1,14 @@
 #game-container {
   padding: 0 1em;
 }
+
+.result-header {
+  .tile,
+  .big-tile {
+    color: white !important;
+  }
+}
+
 .tile {
   width: 9vw;
   text-align: center;
@@ -29,18 +37,15 @@
   margin: 2px 0;
   background: #d8e4eb;
   font-size: 2em;
-  color: white;
   background-color: var(--big-tile);
 }
 
 .heads-tile {
   background-color: var(--heads);
-  color: white;
 }
 
 .tails-tile {
   background-color: var(--tails);
-  color: white;
 }
 
 #heads-title {
@@ -53,11 +58,26 @@
 
 .back-tile {
   background-color: var(--row5);
-  color: white;
 }
 
 #back-title {
   color: var(--row5);
+}
+
+.back-tile {
+  background-color: var(--row5);
+}
+
+#back-title {
+  color: var(--row5);
+}
+
+.run-tile {
+  background-color: var(--row6);
+}
+
+#run-title {
+  color: var(--row6);
 }
 
 .big-tile-header {
@@ -76,4 +96,24 @@
 a {
   text-decoration: none;
   color: inherit;
+}
+
+#game-summary {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50vw;
+  height: 80vh;
+  background: #d8e4eb;
+  border-radius: 1em;
+  z-index: 1000;
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  box-shadow: 0 11px 15px -7px #0003, 0 24px 38px 3px #00000024,
+    0 9px 46px 8px #0000001f;
 }
