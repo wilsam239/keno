@@ -1,3 +1,9 @@
+:root {
+    --tile-width: 8.5vw;
+    --tile-gap: 4px;
+    --tile-height: 5vw;
+}
+
 #game-container {
   padding: 0 1em;
 }
@@ -10,13 +16,13 @@
 }
 
 .tile {
-  width: 9vw;
+  width: 8.5vw;
   text-align: center;
-  height: 7vh;
+  height: 5vw;
   border-radius: 0.25em;
   margin: 2px 0;
   background: #d8e4eb;
-  font-size: 2em;
+  font-size: 3vw;
   color: #0000;
 }
 
@@ -30,9 +36,9 @@
 }
 
 .big-tile {
-  width: 18vw;
+  width: calc((8.5vw * 2) + 4px);
   text-align: center;
-  height: 10vh;
+  height: 10vw;
   border-radius: 0.25em;
   margin: 2px 0;
   background: #d8e4eb;
@@ -81,7 +87,7 @@
 }
 
 .big-tile-header {
-  font-size: 20px;
+  font-size: 2vw;
 }
 
 #fast-forward {
@@ -116,4 +122,24 @@ a {
   margin-bottom: auto;
   box-shadow: 0 11px 15px -7px #0003, 0 24px 38px 3px #00000024,
     0 9px 46px 8px #0000001f;
+}
+
+#heads-board-label, #tails-board-label, .spacer-label {
+    // 4 times the height of a tile plus 4px * rows - 1
+    height: calc(20vw + 12px);
+    border-radius: 0.25em;
+    width:3vw;
+    color: white;
+}
+
+.spacer-label {
+    height: 100%;
+}
+.board-label {
+    transform: rotate(-90deg);
+    font-size: 2vw;
+}
+
+.spacer-tile {
+    visibility: hidden;
 }

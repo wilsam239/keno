@@ -1,16 +1,7 @@
 <section fxLayout="column" id="game-container">
-  <div
-    class="result-header"
-    fxLayout="row"
-    fxFill
-    fxLayoutAlign="space-between"
-    fxLayout
-  >
-    <div
-      class="left-result-header"
-      fxLayoutAlign="center center"
-      fxLayoutGap="4px"
-    >
+  <div class="header" fxLayout="row" fxLayoutGap="12px">
+    <div class="spacer-label">spacer</div>
+    <div class="result-header" fxLayout="row" fxFill fxLayoutGap="4px">
       <a
         id="back-container"
         class="clickable"
@@ -35,12 +26,10 @@
           <mat-icon>refresh</mat-icon>
         </div>
       </div>
-    </div>
-    <div
-      class="right-result-header"
-      fxLayoutAlign="center center"
-      fxLayoutGap="4px"
-    >
+
+      <div class="spacer-tile tile"></div>
+      <div class="spacer-tile tile"></div>
+
       <div id="heads-container" fxLayout="column" fxLayoutAlign=" center">
         <div id="heads-title">Heads</div>
         <div
@@ -66,7 +55,7 @@
         class="big-tile"
         fxLayoutAlign="center center"
         fxLayout="column"
-        fxLayoutGap="4px"
+        fxLayoutGap="1vw"
       >
         <div class="big-tile-header">
           <div>GAME</div>
@@ -82,7 +71,7 @@
             class="big-tile"
             fxLayoutAlign="center center"
             fxLayout="column"
-            fxLayoutGap="4px"
+            fxLayoutGap="1vw"
           >
             <div class="big-tile-header">
               <div>NEXT GAME IN</div>
@@ -96,7 +85,7 @@
             class="big-tile clickable"
             fxLayoutAlign="center center"
             fxLayout="column"
-            fxLayoutGap="4px"
+            fxLayoutGap="1vw"
             (click)="showSummary = true; gs.dialogOpened = true"
           >
             <div class="big-tile-header">
@@ -113,7 +102,7 @@
           fxLayoutAlign="center center"
           (click)="changeDrawTime()"
           fxLayout="column"
-          fxLayoutGap="4px"
+          fxLayoutGap="1vw"
         >
           <div class="big-tile-header">
             <div>{{ fast ? "SLOWER" : "FASTER" }}</div>
@@ -123,24 +112,56 @@
       </ng-template>
     </div>
   </div>
-  <div
-    class="board"
-    fxFlex
-    fxLayoutGap="4px"
-    fxLayout="row wrap"
-    fxLayoutAlign="center"
-  >
-    <div
-      *ngFor="let tile of tiles"
-      class="tile"
-      fxLayoutAlign="center center"
-      [id]="'tile-' + tile"
-      [ngClass]="{ tails: tile > 40 && tile <= 50 }"
-    >
-      {{ tile }}
-    </div>
+
+  <div class="board" fxLayout="column" fxLayoutGap="12px">
+    <ng-container
+      *ngTemplateOutlet="
+        boardSection;
+        context: { className: 'heads', tileList: headTiles }
+      "
+    ></ng-container>
+    <ng-container
+      *ngTemplateOutlet="
+        boardSection;
+        context: { className: 'tails', tileList: tailTiles }
+      "
+    ></ng-container>
   </div>
 </section>
+
+<ng-template #boardSection let-className="className" let-tileList="tileList">
+  <div fxLayout="row" fxLayoutGap="12px">
+    <div
+      id="{{ className }}-board-label"
+      class="{{ className }}-tile"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
+      <span class="board-label">{{ className | titlecase }}</span>
+    </div>
+    <div
+      [class]="className + '-tiles'"
+      fxFlex
+      fxLayoutGap="4px"
+      fxLayout="row wrap"
+    >
+      <ng-container
+        *ngTemplateOutlet="tileTemplate; context: { tiles: tileList }"
+      ></ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #tileTemplate let-tiles="tiles">
+  <div
+    *ngFor="let tile of tiles"
+    class="tile"
+    fxLayoutAlign="center center"
+    [id]="'tile-' + tile"
+  >
+    {{ tile }}
+  </div>
+</ng-template>
 
 <section
   id="game-summary"

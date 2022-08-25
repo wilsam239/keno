@@ -45,7 +45,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
   gameNumber = 0
 
-  tiles = MASTER_LIST
+  headTiles = MASTER_LIST.slice(0, 40);
+  tailTiles = MASTER_LIST.slice(40, 80);
+  
   fast = true
   drawTime = new BehaviorSubject(this.fast ? 500 : 1000)
   private _results: number[] = []
@@ -209,7 +211,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.headCount = 0
     this.tailCount = 0
     this.drawn = []
-    this._results = getRandom(this.tiles, DRAW_SIZE)
+    this._results = getRandom(MASTER_LIST, DRAW_SIZE)
     this.calcResults()
   }
 
