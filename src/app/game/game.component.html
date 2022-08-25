@@ -93,10 +93,11 @@
         <ng-template #allFinished>
           <div
             id="all-games-finished"
-            class="big-tile"
+            class="big-tile clickable"
             fxLayoutAlign="center center"
             fxLayout="column"
             fxLayoutGap="4px"
+            (click)="showSummary = true; gs.dialogOpened = true"
           >
             <div class="big-tile-header">
               <div>RESULT</div>

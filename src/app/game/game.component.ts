@@ -92,65 +92,71 @@ export class GameComponent implements OnInit, OnDestroy {
   initVisualSubs() {
     this.sub(
       this.gs.dialogClosed.pipe(tap(() => (this.showSummary = false))),
-      this.allNumbersDrawn.pipe(
-        filter((b) => b),
-        tap(() => {
-          this.gameFinished = true
-          this.gs.dialogOpened = this.gameNumber == this.config.games
+      this.gameCompletion(),
+      this.drawNumbers()
+    )
+  }
 
-          this.showSummary = this.gs.dialogOpened
-        }),
-        mergeMap(() =>
-          interval(1000).pipe(
-            takeUntil(
-              timer(TIME_BETWEEN_GAMES).pipe(
-                takeWhile(() => this.gameNumber < this.config.games!),
-                tap(() => {
-                  this.draw()
-                  this.allNumbersDrawn.next(false)
-                })
-              )
-            ),
-            tap((val) => {
-              this.secondsTilNext = this.getTimeInString(
-                (TIME_BETWEEN_GAMES - 1000 - 1000 * val) / 1000
-              )
-            })
-          )
-        )
-      ),
+  private gameCompletion() {
+    return this.allNumbersDrawn.pipe(
+      filter((b) => b),
+      tap(() => {
+        this.gameFinished = true
+        this.gs.dialogOpened = this.gameNumber == this.config.games
 
-      this.drawTime.pipe(
-        tap((val) => console.log("Should change interval to " + val)),
-        switchMap((val) =>
-          interval(val).pipe(
-            takeUntil(this.allNumbersDrawn.pipe(filter((b) => b))),
-            repeatWhen(() =>
-              this.allNumbersDrawn.pipe(filter((b) => b === false))
+        this.showSummary = this.gs.dialogOpened
+      }),
+      mergeMap(() =>
+        interval(1000).pipe(
+          takeUntil(
+            timer(TIME_BETWEEN_GAMES).pipe(
+              takeWhile(() => this.gameNumber < this.config.games!),
+              tap(() => {
+                this.draw()
+                this.allNumbersDrawn.next(false)
+              })
             )
-          )
-        ),
-        tap((val) => {
-          const newTile = this._results.at(this.drawn.length)
-
-          if (newTile) {
-            const tile = document.getElementById("tile-" + newTile)
-            if (tile) {
-              tile.classList.add(
-                "selected-" + Math.ceil(newTile / 10),
-                "selected"
-              )
-            }
-            newTile <= 40 ? (this.headCount += 1) : (this.tailCount += 1)
-            this.drawn.push(newTile)
-          } else {
-            this.allNumbersDrawn.next(true)
-          }
-        })
+          ),
+          tap((val) => {
+            this.secondsTilNext = this.getTimeInString(
+              (TIME_BETWEEN_GAMES - 1000 - 1000 * val) / 1000
+            )
+          })
+        )
       )
     )
   }
 
+  private drawNumbers() {
+    return this.drawTime.pipe(
+      tap((val) => console.log("Should change interval to " + val)),
+      switchMap((val) =>
+        interval(val).pipe(
+          takeUntil(this.allNumbersDrawn.pipe(filter((b) => b))),
+          repeatWhen(() =>
+            this.allNumbersDrawn.pipe(filter((b) => b === false))
+          )
+        )
+      ),
+      tap((val) => {
+        const newTile = this._results.at(this.drawn.length)
+
+        if (newTile) {
+          const tile = document.getElementById("tile-" + newTile)
+          if (tile) {
+            tile.classList.add(
+              "selected-" + Math.ceil(newTile / 10),
+              "selected"
+            )
+          }
+          newTile <= 40 ? (this.headCount += 1) : (this.tailCount += 1)
+          this.drawn.push(newTile)
+        } else {
+          this.allNumbersDrawn.next(true)
+        }
+      })
+    )
+  }
   retry() {
     this.totalEvenCount = 0
     this.totalHeadCount = 0
