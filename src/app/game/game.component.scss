@@ -5,7 +5,8 @@
 }
 
 #game-container {
-  padding: 0 1em;
+  padding: 0 4px;
+  user-select: none;
 }
 
 .result-header {
@@ -42,7 +43,7 @@
   border-radius: 0.25em;
   margin: 2px 0;
   background: #d8e4eb;
-  font-size: 2em;
+  font-size: 3vw;
   background-color: var(--big-tile);
 }
 
