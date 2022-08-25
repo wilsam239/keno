@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, Subject } from "rxjs"
 import { SetupModel } from "src/app/setup/setup.component"
 import { getRandom, MASTER_LIST } from "../global"
 
@@ -15,11 +15,21 @@ const DEFAULT_SETUP: SetupModel = {
 })
 export class GameService {
   public dialogOpened = false
+  private _dialogClose = new Subject()
   private _setup: BehaviorSubject<SetupModel> = new BehaviorSubject(
     DEFAULT_SETUP
   )
 
   constructor() {}
+
+  dialogClose() {
+    this.dialogOpened = false
+    this._dialogClose.next(true)
+  }
+
+  get dialogClosed() {
+    return this._dialogClose;
+  }
 
   get setup() {
     return this._setup

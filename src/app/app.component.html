@@ -1,2 +1,6 @@
-<div *ngIf="gs.dialogOpened" id="overlay-container"></div>
+<div
+  *ngIf="gs.dialogOpened"
+  id="overlay-container"
+  (click)="gs.dialogClose()"
+></div>
 <router-outlet></router-outlet>

@@ -67,6 +67,8 @@ export class GameComponent implements OnInit, OnDestroy {
   totalTailCount = 0
   totalEvenCount = 0
 
+  showSummary?: boolean
+
   constructor(public gs: GameService) {}
 
   getTimeInString(time: number) {
@@ -87,11 +89,14 @@ export class GameComponent implements OnInit, OnDestroy {
 
   initVisualSubs() {
     this.sub(
+      this.gs.dialogClosed.pipe(tap(() => (this.showSummary = false))),
       this.allNumbersDrawn.pipe(
         filter((b) => b),
         tap(() => {
           this.gameFinished = true
           this.gs.dialogOpened = this.gameNumber == this.config.games
+
+          this.showSummary = this.gs.dialogOpened
         }),
         mergeMap(() =>
           interval(1000).pipe(
@@ -114,8 +119,11 @@ export class GameComponent implements OnInit, OnDestroy {
 
       this.drawTime.pipe(
         tap((val) => console.log("Should change interval to " + val)),
-        switchMap((val) => interval(val)),
-        filter(() => !this.allNumbersDrawn.getValue()),
+        switchMap((val) =>
+          interval(val).pipe(
+            takeUntil(this.allNumbersDrawn.pipe(filter((b) => b)))
+          )
+        ),
         tap((val) => {
           const newTile = this._results.at(this.drawn.length)
 
@@ -130,6 +138,7 @@ export class GameComponent implements OnInit, OnDestroy {
             newTile <= 40 ? (this.headCount += 1) : (this.tailCount += 1)
             this.drawn.push(newTile)
           } else {
+            console.log("DONE")
             this.allNumbersDrawn.next(true)
           }
         })
@@ -138,9 +147,14 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   retry() {
-    this.gameNumber = 0
+    this.totalEvenCount = 0
+    this.totalHeadCount = 0
+    this.totalTailCount = 0
     this.payout = 0
+    this.gameNumber = 0
+
     this._subs.forEach((s) => s.unsubscribe())
+
     if (this.config.skipVisuals) {
       do {
         this.draw()

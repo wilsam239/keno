@@ -141,7 +141,10 @@
   </div>
 </section>
 
-<section id="game-summary" *ngIf="gameNumber == config.games! && gameFinished">
+<section
+  id="game-summary"
+  *ngIf="gameNumber == config.games! && gameFinished && showSummary"
+>
   <h1>Games Summary</h1>
   <div fxLayout="column">
     <div
