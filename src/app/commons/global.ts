@@ -111,6 +111,7 @@ export const PAYOUTS: { [key: string]: { [key: string]: number } } = {
     "1": 3,
   },
 }
+export const TIME_BETWEEN_GAMES = 10000
 export const DRAW_SIZE = 20
 
 export const NUMBER_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 40]

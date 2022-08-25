@@ -4,13 +4,21 @@ import {
   filter,
   interval,
   isObservable,
+  mergeMap,
   Observable,
   Subscription,
+  switchMap,
   takeUntil,
   tap,
+  timer,
 } from "rxjs"
 import { isSubscription } from "rxjs/internal/Subscription"
-import { DRAW_SIZE, getRandom, MASTER_LIST } from "../commons/global"
+import {
+  DRAW_SIZE,
+  getRandom,
+  MASTER_LIST,
+  TIME_BETWEEN_GAMES,
+} from "../commons/global"
 import { GameService } from "../commons/services/game.service"
 
 @Component({
@@ -20,33 +28,66 @@ import { GameService } from "../commons/services/game.service"
 })
 export class GameComponent implements OnInit, OnDestroy {
   private _subs: Subscription[] = []
+  private drawSub!: Subscription
+
   title = "game"
 
   tiles = MASTER_LIST
-  drawTime = 1000
+  fast = false
+  drawTime = new BehaviorSubject(1000)
   private _results: number[] = []
   drawn: number[] = []
 
   private allNumbersDrawn = new BehaviorSubject(false)
+  finished = false
 
   headCount = 0
   tailCount = 0
 
-  constructor(public gs: GameService) {
-    this._results = getRandom(this.tiles, DRAW_SIZE)
+  secondsTilNext!: string
+
+  constructor(public gs: GameService) {}
+
+  getTimeInString(time: number) {
+    return time.toLocaleString(undefined, { minimumIntegerDigits: 2 })
   }
 
   ngOnInit() {
+    this.draw()
     this.sub(
       this.gs.setup.pipe(
         tap((setup) => {
           console.log(setup)
         })
       ),
-      interval(this.drawTime).pipe(
-        takeUntil(this.allNumbersDrawn.pipe(filter((b) => b))),
-        tap(() => {
-          console.log("Revealing a new tile")
+      this.allNumbersDrawn.pipe(
+        filter((b) => b),
+        tap(() => (this.finished = true)),
+        mergeMap(() =>
+          interval(1000).pipe(
+            takeUntil(
+              timer(TIME_BETWEEN_GAMES).pipe(
+                tap(() => {
+                  console.log("redraw")
+                  this.draw()
+                  this.allNumbersDrawn.next(false)
+                })
+              )
+            ),
+            tap((val) => {
+              this.secondsTilNext = this.getTimeInString(
+                (TIME_BETWEEN_GAMES - 1000 - 1000 * val) / 1000
+              )
+            })
+          )
+        )
+      ),
+
+      this.drawTime.pipe(
+        // tap((val) => console.log("Should change interval to " + val)),
+        switchMap((val) => interval(val)),
+        filter(() => !this.allNumbersDrawn.getValue()),
+        tap((val) => {
           const newTile = this._results.at(this.drawn.length)
 
           if (newTile) {
@@ -64,12 +105,33 @@ export class GameComponent implements OnInit, OnDestroy {
             this.allNumbersDrawn.next(true)
           }
         })
-      ),
-      this.allNumbersDrawn.pipe(
-        filter((b) => b),
-        tap(() => console.log("All numbers drawn!"))
       )
     )
+  }
+
+  draw() {
+    this.secondsTilNext = this.getTimeInString(TIME_BETWEEN_GAMES / 1000)
+    this.finished = false
+    const selected = document.getElementsByClassName("selected")
+    Array.from(selected).forEach((s) => {
+      const classesToRemove: string[] = []
+      s.classList.forEach((c) => {
+        if (c.includes("selected")) {
+          classesToRemove.push(c)
+        }
+      })
+      s.classList.remove(...classesToRemove)
+    })
+
+    this.headCount = 0
+    this.tailCount = 0
+    this.drawn = []
+    this._results = getRandom(this.tiles, DRAW_SIZE)
+  }
+
+  changeDrawTime() {
+    this.fast = !this.fast
+    this.drawTime.next(this.fast ? 1000 : 500)
   }
 
   ngOnDestroy() {

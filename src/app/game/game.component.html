@@ -32,14 +32,40 @@
         fxLayout="column"
         fxLayoutGap="4px"
       >
-        <div id="game-header">
+        <div class="big-tile-header">
           <div>GAME</div>
         </div>
         <div>100</div>
       </div>
-      <div id="fast-forward" class="big-tile" fxLayoutAlign="center center">
-        BUTTON
-      </div>
+      <ng-container *ngIf="finished; else faster">
+        <div
+          id="time-until-next"
+          class="big-tile"
+          fxLayoutAlign="center center"
+          fxLayout="column"
+          fxLayoutGap="4px"
+        >
+          <div class="big-tile-header">
+            <div>NEXT GAME IN</div>
+          </div>
+          <div>0:{{ secondsTilNext }}</div>
+        </div>
+      </ng-container>
+      <ng-template #faster>
+        <div
+          id="fast-forward"
+          class="big-tile"
+          fxLayoutAlign="center center"
+          (click)="changeDrawTime()"
+          fxLayout="column"
+          fxLayoutGap="4px"
+        >
+          <div class="big-tile-header">
+            <div>{{ fast ? "SLOWER" : "FASTER" }}</div>
+          </div>
+          <mat-icon [ngClass]="{ clicked: fast }">fast_forward</mat-icon>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div
