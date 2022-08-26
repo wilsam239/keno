@@ -1,166 +1,134 @@
-<section fxLayout="column" id="game-container">
-  <div class="header" fxLayout="row" fxLayoutGap="12px">
-    <div class="spacer-label">spacer</div>
-    <div class="result-header" fxLayout="row" fxFill fxLayoutGap="4px">
-      <a
-        id="back-container"
-        class="clickable"
-        fxLayout="column"
-        fxLayoutAlign=" center"
-        [routerLink]="['../', AppRoutes.SETUP]"
+<section id="game-container">
+  <div id="header">
+    <mat-grid-list cols="22" rowHeight="1:1" gutterSize="4" class="mb-4">
+      <mat-grid-tile class="spacer-tile tile" colspan="1"></mat-grid-tile>
+      <mat-grid-tile id="back-title" class="text-tile" colspan="2"
+        >Setup</mat-grid-tile
       >
-        <div id="back-title">Setup</div>
-        <div class="tile back-tile" fxLayoutAlign="center center">
-          <mat-icon>arrow_back_ios</mat-icon>
-        </div>
-      </a>
-      <div
-        id="run-container"
-        class="clickable"
-        fxLayout="column"
-        fxLayoutAlign=" center"
-        (click)="retry()"
+      <mat-grid-tile id="run-title" class="text-tile" colspan="2"
+        >Again</mat-grid-tile
       >
-        <div id="run-title">Again</div>
-        <div class="tile run-tile" fxLayoutAlign="center center">
-          <mat-icon>refresh</mat-icon>
+      <mat-grid-tile class="spacer-tile tile" colspan="4"></mat-grid-tile>
+      <mat-grid-tile id="heads-title" class="text-tile" colspan="2"
+        >Heads</mat-grid-tile
+      >
+      <mat-grid-tile id="tails-title" class="text-tile" colspan="2"
+        >Tails</mat-grid-tile
+      >
+      <mat-grid-tile class="tile big-tile" rowspan="2" colspan="4">
+        <div id="current-game-number">
+          <div class="big-tile-header">
+            <div>GAME</div>
+          </div>
+          <div>{{ gameNumber }}</div>
         </div>
-      </div>
+      </mat-grid-tile>
 
-      <div class="spacer-tile tile"></div>
-      <div class="spacer-tile tile"></div>
-
-      <div id="heads-container" fxLayout="column" fxLayoutAlign=" center">
-        <div id="heads-title">Heads</div>
-        <div
-          id="heads-count"
-          class="tile heads-tile"
-          fxLayoutAlign="center center"
-        >
-          {{ headCount }}
-        </div>
-      </div>
-      <div id="tails-container" fxLayout="column" fxLayoutAlign=" center">
-        <div id="tails-title">Tails</div>
-        <div
-          id="tails-count"
-          class="tile tails-tile"
-          fxLayoutAlign="center center"
-        >
-          {{ tailCount }}
-        </div>
-      </div>
-      <div
-        id="game-id"
-        class="big-tile"
-        fxLayoutAlign="center center"
-        fxLayout="column"
-        fxLayoutGap="1vw"
-      >
-        <div class="big-tile-header">
-          <div>GAME</div>
-        </div>
-        <div>{{ gameNumber }}</div>
-      </div>
       <ng-container *ngIf="gameFinished; else faster">
         <ng-container
           *ngIf="gameNumber < (config?.games ?? 0); else allFinished"
         >
-          <div
-            id="time-until-next"
-            class="big-tile"
-            fxLayoutAlign="center center"
-            fxLayout="column"
-            fxLayoutGap="1vw"
-          >
-            <div class="big-tile-header">
-              <div>NEXT GAME IN</div>
+          <mat-grid-tile class="tile big-tile" rowspan="2" colspan="4">
+            <div id="time-until-next">
+              <div class="big-tile-header">
+                <div>NEXT GAME IN</div>
+              </div>
+              <div>0:{{ secondsTilNext }}</div>
             </div>
-            <div>0:{{ secondsTilNext }}</div>
-          </div>
+          </mat-grid-tile>
         </ng-container>
         <ng-template #allFinished>
-          <div
-            id="all-games-finished"
-            class="big-tile clickable"
-            fxLayoutAlign="center center"
-            fxLayout="column"
-            fxLayoutGap="1vw"
+          <mat-grid-tile
+            class="tile big-tile clickable"
+            rowspan="2"
+            colspan="4"
             (click)="showSummary = true; gs.dialogOpened = true"
           >
-            <div class="big-tile-header">
-              <div>RESULT</div>
+            <div id="all-games-finished">
+              <div class="big-tile-header">
+                <div>RESULT</div>
+              </div>
+              <div>{{ payout | currency }}</div>
             </div>
-            <div>{{ payout | currency }}</div>
-          </div>
+          </mat-grid-tile>
         </ng-template>
       </ng-container>
       <ng-template #faster>
-        <div
-          id="fast-forward"
-          class="big-tile clickable"
-          fxLayoutAlign="center center"
+        <mat-grid-tile
+          class="tile big-tile clickable"
+          rowspan="2"
+          colspan="4"
           (click)="changeDrawTime()"
-          fxLayout="column"
-          fxLayoutGap="1vw"
         >
-          <div class="big-tile-header">
-            <div>{{ fast ? "SLOWER" : "FASTER" }}</div>
+          <div id="fast-forward">
+            <div class="big-tile-header">
+              <div>{{ fast ? "SLOWER" : "FASTER" }}</div>
+            </div>
+            <mat-icon [ngClass]="{ clicked: fast }">fast_forward</mat-icon>
           </div>
-          <mat-icon [ngClass]="{ clicked: fast }">fast_forward</mat-icon>
-        </div>
+        </mat-grid-tile>
       </ng-template>
-    </div>
-  </div>
 
-  <div class="board" fxLayout="column" fxLayoutGap="12px">
-    <ng-container
-      *ngTemplateOutlet="
-        boardSection;
-        context: { className: 'heads', tileList: headTiles }
-      "
-    ></ng-container>
-    <ng-container
-      *ngTemplateOutlet="
-        boardSection;
-        context: { className: 'tails', tileList: tailTiles }
-      "
-    ></ng-container>
-  </div>
-</section>
+      <mat-grid-tile class="spacer-tile tile" colspan="1"></mat-grid-tile>
 
-<ng-template #boardSection let-className="className" let-tileList="tileList">
-  <div fxLayout="row" fxLayoutGap="12px">
-    <div
-      id="{{ className }}-board-label"
-      class="{{ className }}-tile"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-    >
-      <span class="board-label">{{ className | titlecase }}</span>
-    </div>
-    <div
-      [class]="className + '-tiles'"
-      fxFlex
-      fxLayoutGap="4px"
-      fxLayout="row wrap"
-    >
+      <!-- The actual bottom row of the header-->
+      <mat-grid-tile class="spacer-tile tile" colspan="1"></mat-grid-tile>
+      <mat-grid-tile
+        class="tile selected-5 clickable"
+        colspan="2"
+        [routerLink]="['../', AppRoutes.SETUP]"
+        ><mat-icon>chevron_left</mat-icon>
+      </mat-grid-tile>
+      <mat-grid-tile
+        class="tile selected-6 clickable"
+        colspan="2"
+        (click)="retry()"
+        ><mat-icon>refresh</mat-icon></mat-grid-tile
+      >
+      <mat-grid-tile class="spacer-tile tile" colspan="4"></mat-grid-tile>
+      <mat-grid-tile class="tile heads-tile" colspan="2">{{
+        headCount
+      }}</mat-grid-tile>
+      <mat-grid-tile class="tile tails-tile" colspan="2">{{
+        tailCount
+      }}</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div id="board">
+    <div id="head-section">
       <ng-container
-        *ngTemplateOutlet="tileTemplate; context: { tiles: tileList }"
+        *ngTemplateOutlet="
+          tileTemplate;
+          context: { tiles: headTiles, name: 'heads' }
+        "
+      ></ng-container>
+    </div>
+    <div id="tail-section">
+      <ng-container
+        *ngTemplateOutlet="
+          tileTemplate;
+          context: { tiles: tailTiles, name: 'tails' }
+        "
       ></ng-container>
     </div>
   </div>
-</ng-template>
+</section>
 
-<ng-template #tileTemplate let-tiles="tiles">
-  <div
-    *ngFor="let tile of tiles"
-    class="tile"
-    fxLayoutAlign="center center"
-    [id]="'tile-' + tile"
-  >
-    {{ tile }}
-  </div>
+<ng-template #tileTemplate let-tiles="tiles" let-name="name">
+  <mat-grid-list cols="22" rowHeight="1:1" gutterSize="4" class="mb-4">
+    <mat-grid-tile rowspan="4" colspan="1" class="{{ name }}-tile board-label"
+      ><span>{{ name | titlecase }}</span>
+    </mat-grid-tile>
+    <mat-grid-tile
+      *ngFor="let tile of tiles"
+      class="tile"
+      fxLayoutAlign="center center"
+      [id]="'tile-' + tile"
+      colspan="2"
+    >
+      {{ tile }}
+    </mat-grid-tile>
+  </mat-grid-list>
 </ng-template>
 
 <section

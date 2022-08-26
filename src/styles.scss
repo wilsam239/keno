@@ -36,3 +36,25 @@ body {
   width: 100%;
   background: #00000099;
 }
+
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.text-tile {
+  .mat-grid-tile-content {
+    align-items: end;
+  }
+}
+
+.tile {
+  .mat-icon {
+    height: 3vw;
+    width: 3vw;
+    font-size: 3vw;
+  }
+}

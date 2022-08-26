@@ -1,27 +1,28 @@
 :root {
-    --tile-width: 8.5vw;
-    --tile-gap: 4px;
-    --tile-height: 5vw;
+  --tile-width: 8.5vw;
+  --tile-gap: 4px;
+  --tile-height: 5vw;
 }
 
 #game-container {
-  padding: 0 4px;
+  padding: 4px;
   user-select: none;
 }
 
-.result-header {
+#header {
   .tile,
   .big-tile {
-    color: white !important;
+    color: white;
   }
 }
 
+.text-tile {
+  font-size: 2vw;
+}
+
 .tile {
-  width: 8.5vw;
   text-align: center;
-  height: 5vw;
   border-radius: 0.25em;
-  margin: 2px 0;
   background: #d8e4eb;
   font-size: 3vw;
   color: #0000;
@@ -29,7 +30,6 @@
 
 .selected {
   color: white;
-  // font-weight: bold;
 }
 
 .tails {
@@ -37,12 +37,10 @@
 }
 
 .big-tile {
-  width: calc((8.5vw * 2) + 4px);
-  text-align: center;
-  height: 10vw;
-  border-radius: 0.25em;
-  margin: 2px 0;
-  background: #d8e4eb;
+  .big-tile-header {
+    font-size: 2vw;
+    margin-bottom: 0.5vw;
+  }
   font-size: 3vw;
   background-color: var(--big-tile);
 }
@@ -55,6 +53,14 @@
   background-color: var(--tails);
 }
 
+#back-title {
+  color: var(--row5);
+}
+
+#run-title {
+  color: var(--row6);
+}
+
 #heads-title {
   color: var(--heads);
 }
@@ -63,41 +69,10 @@
   color: var(--tails);
 }
 
-.back-tile {
-  background-color: var(--row5);
-}
-
-#back-title {
-  color: var(--row5);
-}
-
-.back-tile {
-  background-color: var(--row5);
-}
-
-#back-title {
-  color: var(--row5);
-}
-
-.run-tile {
-  background-color: var(--row6);
-}
-
-#run-title {
-  color: var(--row6);
-}
-
-.big-tile-header {
-  font-size: 2vw;
-}
-
 #fast-forward {
   .clicked {
     // color: #0facde;
   }
-}
-.clickable:hover {
-  cursor: pointer;
 }
 
 a {
@@ -125,22 +100,19 @@ a {
     0 9px 46px 8px #0000001f;
 }
 
-#heads-board-label, #tails-board-label, .spacer-label {
-    // 4 times the height of a tile plus 4px * rows - 1
-    height: calc(20vw + 12px);
-    border-radius: 0.25em;
-    width:3vw;
-    color: white;
+.spacer-label {
+  height: 100%;
 }
 
-.spacer-label {
-    height: 100%;
-}
 .board-label {
+  span {
     transform: rotate(-90deg);
     font-size: 2vw;
+  }
+  border-radius: 0.25em;
+  color: white;
 }
 
 .spacer-tile {
-    visibility: hidden;
+  visibility: hidden;
 }
