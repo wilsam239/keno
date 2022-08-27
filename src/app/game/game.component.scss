@@ -21,40 +21,8 @@
   line-height: 2vw;
 }
 
-.tile {
-  text-align: center;
-  border-radius: 0.25em;
-  background: #d8e4eb;
-  font-size: 3vw;
-  line-height: 3vw;
-  color: #0000;
-}
-
-.selected {
-  color: white;
-}
-
 .tails {
   margin-top: 1em;
-}
-
-.big-tile {
-  .big-tile-header {
-    font-size: 2vw;
-    line-height: 2vw;
-    margin-bottom: 0.5vw;
-  }
-  font-size: 3vw;
-  line-height: 3vw;
-  background-color: var(--big-tile);
-}
-
-.heads-tile {
-  background-color: var(--heads);
-}
-
-.tails-tile {
-  background-color: var(--tails);
 }
 
 #back-title {
@@ -102,20 +70,6 @@ a {
   margin-bottom: auto;
   box-shadow: 0 11px 15px -7px #0003, 0 24px 38px 3px #00000024,
     0 9px 46px 8px #0000001f;
-}
-
-.spacer-label {
-  height: 100%;
-}
-
-.board-label {
-  span {
-    transform: rotate(-90deg);
-    font-size: 2vw;
-    line-height: 2vw;
-  }
-  border-radius: 0.25em;
-  color: white;
 }
 
 .spacer-tile {

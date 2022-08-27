@@ -36,6 +36,7 @@ import { MatTabsModule } from "@angular/material/tabs"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { MatTreeModule } from "@angular/material/tree"
+import { BoardComponent } from "../components/board/board.component"
 
 const MATERIAL_LIBS = [
   MatProgressBarModule,
@@ -77,7 +78,13 @@ const MATERIAL_LIBS = [
 
 @NgModule({
   imports: [...MATERIAL_LIBS, FormsModule, CommonModule, FlexLayoutModule],
-  exports: [...MATERIAL_LIBS, FormsModule, CommonModule, FlexLayoutModule],
-  declarations: [],
+  exports: [
+    ...MATERIAL_LIBS,
+    FormsModule,
+    CommonModule,
+    FlexLayoutModule,
+    BoardComponent,
+  ],
+  declarations: [BoardComponent],
 })
 export class SharedModule {}

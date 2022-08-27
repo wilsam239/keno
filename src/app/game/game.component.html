@@ -94,42 +94,9 @@
       }}</mat-grid-tile>
     </mat-grid-list>
   </div>
-  <div id="board">
-    <div id="head-section">
-      <ng-container
-        *ngTemplateOutlet="
-          tileTemplate;
-          context: { tiles: headTiles, name: 'heads' }
-        "
-      ></ng-container>
-    </div>
-    <div id="tail-section">
-      <ng-container
-        *ngTemplateOutlet="
-          tileTemplate;
-          context: { tiles: tailTiles, name: 'tails' }
-        "
-      ></ng-container>
-    </div>
-  </div>
-</section>
 
-<ng-template #tileTemplate let-tiles="tiles" let-name="name">
-  <mat-grid-list cols="22" rowHeight="1:1" gutterSize="4" class="mb-4">
-    <mat-grid-tile rowspan="4" colspan="1" class="{{ name }}-tile board-label"
-      ><span>{{ name | titlecase }}</span>
-    </mat-grid-tile>
-    <mat-grid-tile
-      *ngFor="let tile of tiles"
-      class="tile"
-      fxLayoutAlign="center center"
-      [id]="'tile-' + tile"
-      colspan="2"
-    >
-      {{ tile }}
-    </mat-grid-tile>
-  </mat-grid-list>
-</ng-template>
+  <app-board [setupBoard]="true"></app-board>
+</section>
 
 <section
   id="game-summary"

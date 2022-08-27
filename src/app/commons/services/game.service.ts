@@ -20,7 +20,22 @@ export class GameService {
     DEFAULT_SETUP
   )
 
-  constructor() {}
+  private _usersNumbers: BehaviorSubject<number[]> = new BehaviorSubject([0])
+
+  constructor() {
+    this._usersNumbers.next([])
+  }
+
+  clickTile(t: number) {
+    let numbers = this._usersNumbers.getValue()
+    if (numbers.includes(t)) {
+      numbers = numbers.filter((n) => n !== t)
+    } else {
+      numbers.push(t)
+    }
+
+    this._usersNumbers.next(numbers)
+  }
 
   dialogClose() {
     this.dialogOpened = false
@@ -30,7 +45,9 @@ export class GameService {
   get dialogClosed() {
     return this._dialogClose
   }
-
+  get usersNumbers() {
+    return this._usersNumbers
+  }
   get setup() {
     return this._setup
   }

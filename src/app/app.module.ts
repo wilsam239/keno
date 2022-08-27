@@ -8,10 +8,11 @@ import { FlexLayoutModule } from "@angular/flex-layout"
 import { AppRoutingModule } from "./app-routing.module"
 import { SharedModule } from "./commons/modules/shared.module"
 import { GameService } from "./commons/services/game.service"
-import { MissingComponent } from "./missing.component"
+import { MissingComponent } from "./missing.component";
+import { BoardComponent } from './commons/components/board/board.component'
 
 @NgModule({
-  declarations: [AppComponent, MissingComponent],
+  declarations: [AppComponent, MissingComponent, ],
   imports: [
     AppRoutingModule,
     BrowserModule,

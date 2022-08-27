@@ -55,10 +55,35 @@ body {
 }
 
 .tile {
+  text-align: center;
+  border-radius: 0.25em;
+  background: #d8e4eb;
+  font-size: 3vw;
+  line-height: 3vw;
+  color: #0000;
   .mat-icon {
     height: 3vw;
     width: 3vw;
     font-size: 3vw;
     line-height: 3vw;
   }
+}
+
+.big-tile {
+  .big-tile-header {
+    font-size: 2vw;
+    line-height: 2vw;
+    margin-bottom: 0.5vw;
+  }
+  font-size: 3vw;
+  line-height: 3vw;
+  background-color: var(--big-tile);
+}
+
+.heads-tile {
+  background-color: var(--heads);
+}
+
+.tails-tile {
+  background-color: var(--tails);
 }

@@ -1,0 +1,21 @@
+.spacer-label {
+  height: 100%;
+}
+
+.board-label {
+  span {
+    transform: rotate(-90deg);
+    font-size: 2vw;
+    line-height: 2vw;
+  }
+  border-radius: 0.25em;
+  color: white;
+}
+
+.selected {
+  color: white;
+}
+
+.muted {
+  opacity: 20%;
+}

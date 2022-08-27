@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, OnInit } from "@angular/core"
 import {
   BehaviorSubject,
   filter,
   interval,
-  isObservable,
   mergeMap,
-  Observable,
   repeatWhen,
   Subscription,
   switchMap,
@@ -14,7 +12,7 @@ import {
   tap,
   timer,
 } from "rxjs"
-import { isSubscription } from "rxjs/internal/Subscription"
+import { BaseComponent } from "../commons/components/base/base.component"
 import {
   AppRoutes,
   DRAW_SIZE,
@@ -38,16 +36,12 @@ export interface HistoricalGame {
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.scss"],
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent extends BaseComponent implements OnInit {
   AppRoutes = AppRoutes
-  private _subs: Subscription[] = []
   private drawSub!: Subscription
 
   gameNumber = 0
 
-  headTiles = MASTER_LIST.slice(0, 40);
-  tailTiles = MASTER_LIST.slice(40, 80);
-  
   fast = true
   drawTime = new BehaviorSubject(this.fast ? 500 : 1000)
   private _results: number[] = []
@@ -73,7 +67,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
   showSummary?: boolean
 
-  constructor(public gs: GameService) {}
+  constructor(public gs: GameService) {
+    super()
+  }
 
   getTimeInString(time: number) {
     return time.toLocaleString(undefined, { minimumIntegerDigits: 2 })
@@ -166,7 +162,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.payout = 0
     this.gameNumber = 0
 
-    this._subs.forEach((s) => s.unsubscribe())
+    super.ngOnDestroy()
 
     if (this.config.skipVisuals) {
       do {
@@ -270,19 +266,5 @@ export class GameComponent implements OnInit, OnDestroy {
   changeDrawTime() {
     this.fast = !this.fast
     this.drawTime.next(this.fast ? 100 : 1000)
-  }
-
-  ngOnDestroy() {
-    this._subs.forEach((s) => s.unsubscribe())
-  }
-
-  sub(...s: (Subscription | Observable<any>)[]) {
-    s.forEach((_s) => {
-      if (isObservable(_s)) {
-        this._subs.push(_s.subscribe())
-      } else if (isSubscription(s)) {
-        this._subs.push(_s)
-      }
-    })
   }
 }
